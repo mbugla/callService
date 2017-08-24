@@ -5,5 +5,5 @@ namespace CS\ServiceApp\Sms\Domain;
 
 interface SmsCenter
 {
-    public function sendForCall($callId);
+    public function sendForCall(string $callId);
 }

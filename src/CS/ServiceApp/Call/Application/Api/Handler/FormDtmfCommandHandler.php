@@ -1,9 +1,9 @@
 <?php
 
-namespace CS\ServiceApp\CallCenter\Application\Api\Handler;
+namespace CS\ServiceApp\Call\Application\Api\Handler;
 
 use CS\ServiceApp\Call\Domain\CallRepository;
-use CS\ServiceApp\CallCenter\Application\Api\Command\DtmfCommand;
+use CS\ServiceApp\Call\Application\Api\Command\DtmfCommand;
 use CS\ServiceApp\Form\Application\FormFactory;
 use CS\ServiceApp\Form\Domain\FormRepository;
 use CS\ServiceApp\Sms\Domain\Sms;

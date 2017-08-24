@@ -1,5 +1,10 @@
 services:
 
+    service_app.controller.call:
+        class: CS\ServiceApp\Call\Infrastructure\Controller\CallController
+        arguments:
+            - '@service_app.call_center'
+
     service_app.repository.call:
         class: CS\ServiceApp\Call\Infrastructure\Doctrine\DoctrineCallRepository
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
@@ -32,7 +37,7 @@ services:
           - 10000
 
     service_app.call_center.call_command_handler:
-        class: CS\ServiceApp\CallCenter\Application\Api\Handler\CallCommandHandler
+        class: CS\ServiceApp\Call\Application\Api\Handler\CallCommandHandler
         arguments: ['@service_app.repository.call', '@service_app.repository.client']
 
     service_app.sms.mobilant.mobilant_sms_center:
@@ -42,15 +47,15 @@ services:
             - [setLogger, ['@logger']]
 
     cs.service_app.call_center.premium_content_dtmf_command_handler:
-        class: CS\ServiceApp\CallCenter\Application\Api\Handler\PremiumContentDtmfCommandHandler
+        class: CS\ServiceApp\Call\Application\Api\Handler\PremiumContentDtmfCommandHandler
         arguments: ['%premium_content_url%', '@service_app.sms.mobilant.mobilant_sms_center', '@service_app.repository.call', '@service_app.repository.sms']
 
     service_app.dtmf_command_handler:
-        class: CS\ServiceApp\CallCenter\Application\Api\Handler\DtmfCommandHandler
+        class: CS\ServiceApp\Call\Application\Api\Handler\DtmfCommandHandler
         arguments: ['@service_app.repository.call', '@service_app.repository.form', '@service_app.repository.sms']
 
     service_app.call_center:
-        class: CS\ServiceApp\CallCenter\Domain\CallCenter
+        class: CS\ServiceApp\CallCenter\Application\CallCenter
         arguments:
             - 'Lufthansa'
             - '@service_app.call_center.call_command_handler'

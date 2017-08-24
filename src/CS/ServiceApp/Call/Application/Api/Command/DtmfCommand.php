@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CS\ServiceApp\CallCenter\Application\Api\Command;
+namespace CS\ServiceApp\Call\Application\Api\Command;
 
 use CS\ServiceApp\Call\Domain\Dtmf;
 

@@ -40,12 +40,20 @@ class Gather implements SipGateResponse
         $gather->setAttribute('maxDigits', '1');
         $gather->setAttribute('timeout', (string)$this->timeout);
         $play = $dom->createElement('Play');
-        $url = $dom->createElement('Url',$this->soundPath);
+        $url = $dom->createElement('Url', $this->soundPath);
         $play->appendChild($url);
         $gather->appendChild($play);
         $response->appendChild($gather);
         $dom->appendChild($response);
 
         return $dom->saveXml();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getXmlResponse();
     }
 }

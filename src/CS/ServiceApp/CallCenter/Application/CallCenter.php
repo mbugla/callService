@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace CS\ServiceApp\CallCenter\Domain;
+namespace CS\ServiceApp\CallCenter\Application;
 
-use CS\ServiceApp\CallCenter\Application\Api\Handler\CallCommandHandler;
-use CS\ServiceApp\CallCenter\Application\Api\Command\CallCommand;
-use CS\ServiceApp\CallCenter\Application\Api\Command\DtmfCommand;
-use CS\ServiceApp\CallCenter\Application\Api\Handler\DtmfCommandHandler;
+use CS\ServiceApp\Call\Application\Api\Handler\CallCommandHandler;
+use CS\ServiceApp\Call\Application\Api\Command\CallCommand;
+use CS\ServiceApp\Call\Application\Api\Command\DtmfCommand;
+use CS\ServiceApp\Call\Application\Api\Handler\DtmfCommandHandler;
+use CS\ServiceApp\Response\Application\ResponseFactory;
 use CS\ServiceApp\Response\Domain\Reject;
 use CS\ServiceApp\Response\Domain\SipGateResponse;
 use CS\ServiceApp\SMS\Domain\SmsCenter;
@@ -15,21 +16,21 @@ class CallCenter
 {
     const NEW_CALL_EVENT = 'newCall';
     const DTMF_EVENT = 'dtmf';
+
     /** @var string */
     private $name;
 
     /** @var SmsCenter */
     private $smsCenter;
 
-    /** @var SipGateResponse */
-    private $sipGateResponse;
-
     /** @var CallCommandHandler */
     private $callCommandHandler;
-    /**
-     * @var DtmfCommandHandler
-     */
+
+    /** @var DtmfCommandHandler */
     private $dtmfCommandHandler;
+
+    /** @var ResponseFactory */
+    private $responseFactory;
 
     /**
      * CallCenter constructor.
@@ -37,21 +38,21 @@ class CallCenter
      * @param string             $name
      * @param CallCommandHandler $callCommandHandler
      * @param DtmfCommandHandler $dtmfCommandHandler
-     * @param SipGateResponse    $sipGateResponse
+     * @param ResponseFactory    $responseFactory
      * @param SmsCenter          $smsCenter
      */
     public function __construct(
         string $name,
         CallCommandHandler $callCommandHandler,
         DtmfCommandHandler $dtmfCommandHandler,
-        SipGateResponse $sipGateResponse,
+        ResponseFactory $responseFactory,
         SmsCenter $smsCenter
     ) {
         $this->name = $name;
         $this->smsCenter = $smsCenter;
-        $this->sipGateResponse = $sipGateResponse;
         $this->callCommandHandler = $callCommandHandler;
         $this->dtmfCommandHandler = $dtmfCommandHandler;
+        $this->responseFactory = $responseFactory;
     }
 
     public function handleIncomingEvent(array $eventData)
@@ -81,7 +82,7 @@ class CallCenter
 
         $this->callCommandHandler->handle($command);
 
-        return $this->sipGateResponse->getXmlResponse();
+        return (string) $this->responseFactory->getByType('gather');
     }
 
     /**

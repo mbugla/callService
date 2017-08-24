@@ -21,4 +21,12 @@ class Reject implements SipGateResponse
 
         return $dom->saveXML();
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getXmlResponse();
+    }
 }

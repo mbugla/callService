@@ -1,9 +1,9 @@
 <?php
 
-namespace CS\ServiceApp\CallCenter\Application\Api\Handler;
+namespace CS\ServiceApp\Call\Application\Api\Handler;
 
 use CS\ServiceApp\Call\Domain\CallRepository;
-use CS\ServiceApp\CallCenter\Application\Api\Command\CallCommand;
+use CS\ServiceApp\Call\Application\Api\Command\CallCommand;
 use CS\ServiceApp\Client\Domain\Client;
 use CS\ServiceApp\Client\Domain\ClientRepository;
 

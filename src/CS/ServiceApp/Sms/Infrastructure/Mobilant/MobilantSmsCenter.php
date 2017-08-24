@@ -42,19 +42,28 @@ class MobilantSmsCenter implements SmsCenter, LoggerAwareInterface
      *
      * @return string
      */
-    public function sendForCall($callId)
+    public function sendForCall(string $callId)
     {
         $smsMessage = $this->smsRepository->findByCallId($callId);
         $this->logger->debug($callId);
 
-        $this->send($smsMessage);
+        $responseCode = $this->send($smsMessage);
 
-        if ($this->logger) {
-            $this->logger->info(
-                'Message sent to: '.$smsMessage->to().' content: '.$smsMessage->content(
-                ).' with response code:'.$responseCode
-            );
+        if($responseCode === 100) {
+            $smsMessage->wasSentAt(new \DateTime());
+            $this->smsRepository->store($smsMessage);
+
+            if ($this->logger) {
+                $this->logger->info(
+                    'Message sent to: '.$smsMessage->to().' content: '.$smsMessage->content(
+                    ).' with response code:'.$responseCode
+                );
+            }
+
+            return;
         }
+
+
 
         return;
     }

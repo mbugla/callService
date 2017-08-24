@@ -37,7 +37,7 @@ class SipGateSmsCenter implements SmsCenter, LoggerAwareInterface
      *
      * @return string
      */
-    public function sendForCall($callId)
+    public function sendForCall(string $callId)
     {
         $smsMessage = $this->smsRepository->findByCallId($callId);
 
