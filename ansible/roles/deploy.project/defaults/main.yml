@@ -1,0 +1,18 @@
+---
+deploy:
+  project:
+    root: '/tmp'
+    name: 'Default Name'
+    scm: 'git'
+    repo: 'repo addres'
+    branch: 'master'
+    copy_previous_release: True
+    copy_previous_opts: []
+    keep_previous_releases: 3
+    writable_dirs: []
+    shared_dirs: []
+    shared_files: []
+    templated_files: []
+    rsync_opts: []
+
+__deploy_project_link_shared_task: link_shared.yml

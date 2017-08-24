@@ -1,0 +1,6 @@
+---
+- name: Clearing controllers
+  shell: rm -f {{item}}
+  args:
+    chdir: "{{deploy.project.root}}/releases/{{project_deploy_date.stdout}}/web"
+  with_items: "{{deploy.project.php.symfony2.clear_controllers}}"

@@ -1,0 +1,17 @@
+---
+- name: Define copy_previous_opts empty
+  set_fact:
+    copy_previous_opts: "{{ __copy_previous_opts | list }}"
+  when: deploy.project.copy_previous_opts is not defined
+
+- name: Define copy_previous_opts customized
+  set_fact:
+    copy_previous_opts: "{{ deploy.project.copy_previous_opts | list }}"
+  when: deploy.project.copy_previous_opts is defined
+
+- name: Copy previous source code
+  command: rsync -a {{deploy.project.root}}/releases/{{current_release}}/ {{deploy.project.root}}/shared/cached-copy {{ copy_previous_opts|join(' ') }}
+  ignore_errors: yes
+  when: (deploy.project.copy_previous_release == True) and current_release_exists
+
+

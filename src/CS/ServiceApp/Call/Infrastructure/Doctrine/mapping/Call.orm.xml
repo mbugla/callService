@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="CS\ServiceApp\Call\Domain\Call" table="calls" repository-class="CS\ServiceApp\Call\Infrastructure\Doctrine\DoctrineCallRepository">
+        <id name="callId" type="string" length="255"/>
+        <many-to-one target-entity="CS\ServiceApp\Client\Domain\Client" field="client"/>
+        <field name="direction" />
+        <field name="event"/>
+        <field name="from" column="number_from"/>
+        <field name="to" column="number_to"/>
+        <field name="createdAt" type="datetime"/>
+    </entity>
+
+</doctrine-mapping>

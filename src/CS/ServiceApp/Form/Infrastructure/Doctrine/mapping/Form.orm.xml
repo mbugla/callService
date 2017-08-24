@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="CS\ServiceApp\Form\Domain\Form" table="forms" repository-class="CS\ServiceApp\Form\Infrastructure\Doctrine\DoctrineFormRepository">
+        <id name="id" />
+        <one-to-one target-entity="CS\ServiceApp\Call\Domain\Call" field="call">
+            <join-column name="call_id" referenced-column-name="call_id" />
+        </one-to-one>
+        <field name="question" type="text"/>
+        <field name="createdAt" type="datetime"/>
+        <field name="updatedAt" type="datetime"/>
+    </entity>
+
+</doctrine-mapping>

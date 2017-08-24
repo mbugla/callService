@@ -1,0 +1,43 @@
+---
+#- include: dump_assets.yml
+#- include: doctrine_schema_update.yml
+- include: custom_commands.yml
+- include: clear_controllers.yml
+- include: cache.yml
+# tasks file for symfony2 deploy
+# - name: Ensure cache directory
+#   action:
+#     file dest={{deploy.project.root}}/releases/{{project_deploy_date.stdout}}/app/cache
+#     state=directory
+#     mode=0777
+
+# - name: Create app/logs symlink
+#   file:
+#     state=link
+#     src={{deploy.project.root}}/shared/app/logs path={{deploy.project.root}}/releases/{{project_deploy_date.stdout}}/app/logs
+
+# - name: Create web/uploads symlink
+#   file:
+#     state=link
+#     src={{deploy.project.root}}/shared/web/uploads path={{deploy.project.root}}/releases/{{project_deploy_date.stdout}}/web/uploads
+
+# - name: Create app/config/parameters.yml symlink
+#   file:
+#     state=link
+#     src={{deploy.project.root}}/shared/app/config/parameters.yml
+#     path={{deploy.project.root}}/releases/{{project_deploy_date.stdout}}/app/config/parameters.yml
+
+# - name: Run composer install
+#   shell: cd {{deploy.project.root}}/releases/{{project_deploy_date.stdout}} && {{symfony2_project_php_path}} {{deploy.project.root}}/composer.phar install {{symfony2_project_composer_opts}}
+
+# - name: Dump assets
+#   shell: cd {{deploy.project.root}}/releases/{{project_deploy_date.stdout}} && {{symfony2_project_php_path}} app/console assetic:dump --env={{symfony2_project_env}} {{symfony2_project_console_opts}}
+
+# - name: Create symlink
+#   file:
+#     state=link
+#     src={{deploy.project.root}}/releases/{{project_deploy_date.stdout}}
+#     path={{deploy.project.root}}/current
+
+# - name: Migrating database
+#   shell: cd {{deploy.project.root}}/releases/{{project_deploy_date.stdout}} && {{symfony2_project_php_path}} app/console doctrine:migrations:migrate --no-interaction

@@ -1,0 +1,5 @@
+---
+- name: Dump assets
+  shell: php app/console assetic:dump --env={{deploy.project.php.symfony2.env}} {{deploy.project.php.symfony2.console_opts}}
+  args:
+    chdir: "{{deploy.project.root}}/releases/{{project_deploy_date.stdout}}"

@@ -1,0 +1,59 @@
+services:
+
+    service_app.repository.call:
+        class: CS\ServiceApp\Call\Infrastructure\Doctrine\DoctrineCallRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - CS\ServiceApp\Call\Domain\Call
+
+    service_app.repository.form:
+        class: CS\ServiceApp\Form\Infrastructure\Doctrine\DoctrineFormRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - CS\ServiceApp\Form\Domain\Form
+
+    service_app.repository.client:
+        class: CS\ServiceApp\Client\Infrastructure\Doctrine\DoctrineClientRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - CS\ServiceApp\Client\Domain\Client
+
+    service_app.repository.sms:
+        class: CS\ServiceApp\Sms\Infrastructure\Doctrine\DoctrineSmsRepository
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - CS\ServiceApp\Sms\Domain\Sms
+
+    service_app.response.gather:
+        class: CS\ServiceApp\Response\Domain\Gather
+        arguments:
+          - 'http://buglamarek.usermd.net/'
+          - 'http://buglamarek.usermd.net/music_star_sound.wav'
+          - 10000
+
+    service_app.call_center.call_command_handler:
+        class: CS\ServiceApp\CallCenter\Application\Api\Handler\CallCommandHandler
+        arguments: ['@service_app.repository.call', '@service_app.repository.client']
+
+    service_app.sms.mobilant.mobilant_sms_center:
+        class: CS\ServiceApp\Sms\Infrastructure\Mobilant\MobilantSmsCenter
+        arguments: ['%mobilant_sms_gateway%', '%mobilant_key%', '@service_app.repository.sms']
+        calls:
+            - [setLogger, ['@logger']]
+
+    cs.service_app.call_center.premium_content_dtmf_command_handler:
+        class: CS\ServiceApp\CallCenter\Application\Api\Handler\PremiumContentDtmfCommandHandler
+        arguments: ['%premium_content_url%', '@service_app.sms.mobilant.mobilant_sms_center', '@service_app.repository.call', '@service_app.repository.sms']
+
+    service_app.dtmf_command_handler:
+        class: CS\ServiceApp\CallCenter\Application\Api\Handler\DtmfCommandHandler
+        arguments: ['@service_app.repository.call', '@service_app.repository.form', '@service_app.repository.sms']
+
+    service_app.call_center:
+        class: CS\ServiceApp\CallCenter\Domain\CallCenter
+        arguments:
+            - 'Lufthansa'
+            - '@service_app.call_center.call_command_handler'
+            - '@cs.service_app.call_center.premium_content_dtmf_command_handler'
+            - '@service_app.response.gather'
+            - '@service_app.sms.mobilant.mobilant_sms_center'

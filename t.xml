@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<methodCall>
+    <methodName>samurai.SessionInitiate</methodName>
+    <params>
+        <param>
+            <value>
+                <struct>
+                    <member>
+                        <name>LocalUri</name>
+                        <value>
+                            <string>sip:49eigenerAbsender@sipgate.de</string>
+                        </value>
+                    </member>
+                    <member>
+                        <name>RemoteUri</name>
+                        <value>
+                            <string>sip:491Mobilrufnummer@sipgate.net</string>
+                        </value>
+                    </member>
+                    <member>
+                        <name>TOS</name>
+                        <value>
+                            <string>text</string>
+                        </value>
+                    </member>
+                    <member>
+                        <name>Content</name>
+                        <value>
+                            <string>test sms</string>
+                        </value>
+                    </member>
+                </struct>
+            </value>
+        </param>
+    </params>
+</methodCall>

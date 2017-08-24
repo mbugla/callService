@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: no
+  roles:
+      - deploy.setup
+      - deploy.project
+      - deploy.finalize
+  vars:
+    deploy:
+      project:
+        root: '/home/buglamarek/domains/buglamarek.usermd.net/'
+        name: 'service_app'
+        scm: 'rsync'
+        source: "../"
+        keep_previous_releases: 1
+        copy_previous_release: False
+        writable_dirs:
+          - src: "var/cache"
+          - src: "var/logs"
+        shared_dirs:
+          - "var/sessions"
+        shared_files:
+          - src: "var/logs"
+        templated_files: []
+      finalize:
+        required_sudo: True
+        commands:
+          - "rm -rf /var/www/current/var/cache/*"
+          - "php70 /home/buglamarek/domains/buglamarek.usermd.net/service_app/current/bin/console doctrine:schema:update --force"
+    permission_model: 'chmod'

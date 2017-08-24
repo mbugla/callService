@@ -1,0 +1,29 @@
+---
+## from galaxy
+#- src: yatesr.timezone
+
+# from github
+- src: jkanclerz.deploy-project
+  path: roles/
+  version: master
+  name: deploy.project
+
+- src: jkanclerz.deploy-finalize
+  path: roles/
+  version: master
+  name: deploy.finalize
+
+- src: jkanclerz.deploy-setup
+  path: roles/
+  version: master
+  name: deploy.setup
+
+- src: jkanclerz.deploy-project-php-symfony
+  path: roles/
+  version: master
+  name: deploy.project.php.symfony
+
+- src: jkanclerz.deploy-rollback
+  path: roles/
+  version: master
+  name: deploy.rollback

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="CS\ServiceApp\Sms\Domain\Sms" table="sms_messages" repository-class="CS\ServiceApp\Sms\Infrastructure\Doctrine\DoctrineSmsRepository">
+        <id name="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+        <one-to-one target-entity="CS\ServiceApp\Call\Domain\Call" field="call">
+            <join-column name="call_id" referenced-column-name="call_id" />
+        </one-to-one>
+        <field name="to" column="number_to" length="255"/>
+        <field name="content" type="text"/>
+        <field name="createdAt" type="datetime"/>
+    </entity>
+
+</doctrine-mapping>

@@ -1,0 +1,16 @@
+---
+- name: Deny update database schema
+  set_fact:
+     doctrine_schema_update: False
+  when: deploy.project.php.symfony2.doctrine.schema_update is not defined
+
+- name: Allow update database schema
+  set_fact:
+     doctrine_schema_update: True
+  when: deploy.project.php.symfony2.doctrine.schema_update == True
+
+- name: Doctrine schema update
+  shell: php app/console doctrine:schema:update --force {{deploy.project.php.symfony2.console_opts}} --env={{deploy.project.php.symfony2.env}}
+  args:
+    chdir: "{{deploy.project.root}}/releases/{{project_deploy_date.stdout}}"
+  when: doctrine_schema_update == True

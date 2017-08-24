@@ -1,0 +1,10 @@
+---
+- name: Clearing cache
+  shell: php app/console cache:clear --env={{deploy.project.php.symfony2.env}} {{deploy.project.php.symfony2.console_opts}}
+  args:
+    chdir: "{{deploy.project.root}}/releases/{{project_deploy_date.stdout}}"
+
+- name: Cache Warmup
+  shell: php app/console cache:warmup --env={{deploy.project.php.symfony2.env}} {{deploy.project.php.symfony2.console_opts}}
+  args:
+    chdir: "{{deploy.project.root}}/releases/{{project_deploy_date.stdout}}"
