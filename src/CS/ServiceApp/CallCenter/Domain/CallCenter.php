@@ -7,6 +7,7 @@ use CS\ServiceApp\CallCenter\Application\Api\Handler\CallCommandHandler;
 use CS\ServiceApp\CallCenter\Application\Api\Command\CallCommand;
 use CS\ServiceApp\CallCenter\Application\Api\Command\DtmfCommand;
 use CS\ServiceApp\CallCenter\Application\Api\Handler\DtmfCommandHandler;
+use CS\ServiceApp\Response\Domain\Reject;
 use CS\ServiceApp\Response\Domain\SipGateResponse;
 use CS\ServiceApp\SMS\Domain\SmsCenter;
 
@@ -93,8 +94,8 @@ class CallCenter
         $command = new DtmfCommand($dtmfEvent['event'], (int)$dtmfEvent[self::DTMF_EVENT], $dtmfEvent['callId']);
 
         $this->dtmfCommandHandler->handleDTMF($command);
+        $this->smsCenter->sendForCall($dtmfEvent['callId']);
 
-        return $this->smsCenter->sendForCall($dtmfEvent['callId']);
+        return (new Reject())->getXmlResponse();
     }
-
 }

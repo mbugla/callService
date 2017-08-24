@@ -25,15 +25,11 @@ class CallCenterTest extends TestCase
         $clientRepository = new InMemoryClientRepository();
         $callRepository = new InMemoryCallRepository();
         $formRepository = new InMemoryFormRepository();
-        $smsCenter = new FakeSmsCenter();
         $loger = new ConsoleLogger();
         $smsCenter->setLogger($loger);
 
         $callCenter = new CallCenter(
             'lufthansa',
-            $callRepository,
-            $clientRepository,
-            $formRepository,
             new Gather('http://app.dev', 'http://sound.vaw', 10000),
             $smsCenter
         );

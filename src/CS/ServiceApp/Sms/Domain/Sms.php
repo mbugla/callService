@@ -22,6 +22,9 @@ class Sms
     /** @var  Call */
     private $call;
 
+    /** @var  \DateTime */
+    private $sentAt;
+
     /**
      * Sms constructor.
      *
@@ -82,5 +85,29 @@ class Sms
     public function assignCall(Call $call)
     {
         $this->call = $call;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getSentAt(): \DateTime
+    {
+        return $this->sentAt;
+    }
+
+    /**
+     * @param \DateTime $dateTime
+     */
+    public function wasSentAt(\DateTime $dateTime)
+    {
+        $this->sentAt = $dateTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSent(): bool
+    {
+        return $this->sentAt instanceof \DateTime;
     }
 }
