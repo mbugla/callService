@@ -6,13 +6,10 @@ use CS\ServiceApp\Call\Application\Api\Handler\CallCommandHandler;
 use CS\ServiceApp\Call\Application\Api\Handler\DtmfCommandDispatcher;
 use CS\ServiceApp\Call\Application\Api\Handler\FormDtmfCommandHandler;
 use CS\ServiceApp\Call\Application\Api\Handler\PremiumContentDtmfCommandHandler;
-use CS\ServiceApp\Call\Domain\Call;
-use CS\ServiceApp\Call\Domain\Dtmf;
 use CS\ServiceApp\CallCenter\Application\CallCenter;
 use CS\ServiceApp\Response\Application\ResponseFactory;
 use CS\ServiceApp\Response\Domain\Gather;
 use CS\ServiceApp\Response\Domain\Reject;
-use CS\ServiceApp\Response\Domain\SipGateSms;
 use PHPUnit\Framework\TestCase;
 use Tests\CS\ServiceApp\Implementation\Logger\ConsoleLogger;
 use Tests\CS\ServiceApp\Implementation\Repository\InMemoryCallRepository;
@@ -64,27 +61,30 @@ class CallCenterTest extends TestCase
         $clientRepository = new InMemoryClientRepository();
         $callRepository = new InMemoryCallRepository();
         $formRepository = new InMemoryFormRepository();
-        $smsCenter = new SipGateSmsCenter(new SipGateSms('JohnDoe'));
+        $smsRespository = new InMemorySmsRepository();
         $logger = new ConsoleLogger();
+        $smsCenter = new \Tests\CS\ServiceApp\Implementation\Sms\FakeSmsCenter();
         $smsCenter->setLogger($logger);
 
-        $callCenter = new CallCenter(
-            'lufthansa',
+        $premiumContentDtmfHandler = new PremiumContentDtmfCommandHandler(
+            'http://premium.dev',
             $callRepository,
-            $clientRepository,
-            $formRepository,
-            new Gather('http://app.dev', 'http://sound.vaw', 10000),
-            $smsCenter
+            $smsRespository
+        );
+        $formDtmfHandler = new FormDtmfCommandHandler($callRepository, $formRepository, $smsRespository);
+        $dtmfDispatcher = new DtmfCommandDispatcher($premiumContentDtmfHandler, $formDtmfHandler);
+        $callCommandHandler = new CallCommandHandler($callRepository, $clientRepository);
+        $responseFactory = new ResponseFactory(new Gather('http://app.dev', 'http://sound.vaw', 10000), new Reject());
+
+        $callCenter = new CallCenter('lufthansa', $callCommandHandler, $dtmfDispatcher, $responseFactory, $smsCenter);
+
+        $callCenter->handleIncomingEvent(
+            ['event' => 'newCall', 'from' => '123123123', 'to' => '234234234', 'direction' => 'in', 'callId' => "1"]
         );
 
-        $call = new Call('newCall', '123123123', '234234234', 'in', "1", new \DateTime());
-        $callCenter->handleIncomingCall($call);
+        $callCenter->handleIncomingEvent(['event' => 'dtmf', 'dtmf' => 2, 'callId' => '1']);
+        $sms = $smsRespository->findByCallId('1');
 
-        $dtmf = new Dtmf('dtmf', 1, '1');
-
-        $smsResponse = $callCenter->handleDTMF($dtmf);
-
-        $this->assertRegExp('#<string>(.*?): https?://(.*)/form/(\d+)</string>#', $smsResponse);
-        $this->assertContains('<methodName>samurai.SessionInitiate</methodName>', $smsResponse);
+        $this->assertRegExp('#(.*?): https?://(.*)/form/(\d+)#', $sms->content());
     }
 }

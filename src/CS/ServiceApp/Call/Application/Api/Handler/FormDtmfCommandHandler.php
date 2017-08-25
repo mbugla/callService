@@ -43,22 +43,19 @@ class FormDtmfCommandHandler implements DtmfCommandHandler
     {
         $dtmf = $dtmfCommand->getDtmf();
 
-        switch ($dtmf->getDtmf()) {
-            case 1:
-                $call = $this->callRepository->load($dtmf->getCallId());
+        $call = $this->callRepository->load($dtmf->getCallId());
 
-                $form = FormFactory::create($call);
-                $this->formRepository->store($form);
+        $form = FormFactory::create($call);
+        $this->formRepository->store($form);
 
-                $sms = new Sms(
-                    $call->getFrom(),
-                    'Your form link: '.'http://buglamarek.usermd.net/form/'.$form->getId(),
-                    new \DateTime()
-                );
+        $sms = new Sms(
+            $call->getFrom(),
+            'Your form link: '.'http://buglamarek.usermd.net/form/'.$form->getId(),
+            new \DateTime()
+        );
 
-                $sms->assignCall($call);
+        $sms->assignCall($call);
 
-                $this->smsRepository->store($sms);
-        }
+        $this->smsRepository->store($sms);
     }
 }

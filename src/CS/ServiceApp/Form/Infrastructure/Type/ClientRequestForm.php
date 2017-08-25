@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace CS\ServiceApp\Form\Infrastructure\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

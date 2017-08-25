@@ -1,5 +1,17 @@
 services:
 
+    service_app.controller.form:
+        class: CS\ServiceApp\Form\Infrastructure\Controller\FormController
+        arguments:
+          - '@templating'
+          - '@form.factory'
+          - '@service_app.repository.form'
+
+    service_app.controller.premium_content:
+        class: CS\ServiceApp\Content\Infrastructure\Controller\PremiumContentController
+        arguments:
+            - '@templating'
+
     service_app.controller.call:
         class: CS\ServiceApp\Call\Infrastructure\Controller\CallController
         arguments:
@@ -32,7 +44,7 @@ services:
     service_app.response.gather:
         class: CS\ServiceApp\Response\Domain\Gather
         arguments:
-          - 'http://buglamarek.usermd.net/'
+          - '%app_url%'
           - 'http://buglamarek.usermd.net/music_star_sound.wav'
           - 10000
 
