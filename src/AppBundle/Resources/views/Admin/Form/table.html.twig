@@ -1,0 +1,27 @@
+<table id="contracts-list" class="table table-bordered table-hover dataTable" role="grid">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Call</th>
+        <th>Is Answered / Answer Date</th>
+        <th>Created At</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for form in forms %}
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
+            <td>{{ form.id }}</td>
+            <td>{{ form.call }}</td>
+            <td>{% if form.isAnswered %} YES / {{ form.answerDate|date }} {% else %}NO{% endif %}</td>
+            <td>{{ form.createdAt|date }} </td>
+            <td>
+                <a href="" type="button"
+                   class="btn btn-success">Details</a>
+                <a href="" type="button"
+                   class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

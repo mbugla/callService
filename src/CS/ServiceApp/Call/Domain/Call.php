@@ -128,4 +128,9 @@ class Call
             $callData['createdAt']
         );
     }
+
+    public function __toString()
+    {
+        return 'From: '.$this->from;
+    }
 }

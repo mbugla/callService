@@ -10,5 +10,9 @@ request_form:
   path: /form/{id}
   defaults: { _controller: service_app.controller.form:formAction }
 
+admin:
+    resource: "@AppBundle/Controller/Admin/FormCrudController.php"
+    type: annotation
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"

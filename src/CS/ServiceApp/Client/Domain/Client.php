@@ -42,7 +42,7 @@ class Client
         return $this->calls;
     }
 
-    public function addCall(Call $call)
+    public function madeACall(Call $call)
     {
         $this->calls->add($call);
     }

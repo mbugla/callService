@@ -12,6 +12,7 @@
         <field name="question" type="text"/>
         <field name="createdAt" type="datetime"/>
         <field name="updatedAt" type="datetime"/>
+        <field name="answerDate" type="datetime" nullable="true"/>
     </entity>
 
 </doctrine-mapping>

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('includes/plugins/datatables/dataTables.bootstrap.css') }}">
+    {{ parent() }}
+
+{% endblock %}
+
+ {% block content_header %}
+
+     {% block breadcrumbs %}
+         <div class="row">
+             <ol class="breadcrumb">
+                 <li><a href="#"><i class="fa fa-dashboard"></i> Forms</a></li>
+                 <li class="active">List</li>
+             </ol>
+         </div>
+     {% endblock %}
+
+ {% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="box-body">
+            <a href="" class="pull-right btn btn-primary">
+                Dodaj umowę
+            </a>
+        </div>
+    </div>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3>
+                Lista umów
+            </h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                <div class="row">
+                    <div class="col-sm-12">
+                        {% include "@App/Admin/Form/table.html.twig" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('includes/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('includes/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $('#contracts-list').DataTable({
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+
+    </script>
+
+{% endblock %}
