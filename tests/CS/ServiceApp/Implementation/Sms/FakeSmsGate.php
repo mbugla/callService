@@ -1,27 +1,34 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mbugla
- * Date: 24.08.2017
- * Time: 15:20
- */
+declare(strict_types=1);
 
 namespace Tests\CS\ServiceApp\Implementation\Sms;
 
-use CS\ServiceApp\Sms\Domain\SmsCenter;
+use CS\ServiceApp\Sms\Domain\SmsGate;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class FakeSmsCenter implements SmsCenter, LoggerAwareInterface
+class FakeSmsGate implements SmsGate, LoggerAwareInterface
 {
     /** @var  LoggerInterface */
     private $logger;
+    /** @var int */
+    private $responseCode;
+
+    /**
+     * FakeSmsCenter constructor.
+     *
+     * @param $responseCode
+     */
+    public function __construct(int $responseCode = 100)
+    {
+        $this->responseCode = $responseCode;
+    }
 
     public function sendForCall(string $callId)
     {
         $this->logger->info('SMS messsage sent');
 
-        return 100;
+        return $this->responseCode;
     }
 
     /**

@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace CS\ServiceApp\Sms\Infrastructure\Mobilant;
 
 use CS\ServiceApp\Sms\Domain\Sms;
-use CS\ServiceApp\Sms\Domain\SmsCenter;
+use CS\ServiceApp\Sms\Domain\SmsGate;
 use CS\ServiceApp\Sms\Domain\SmsRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class MobilantSmsCenter implements SmsCenter, LoggerAwareInterface
+class MobilantSmsGate implements SmsGate, LoggerAwareInterface
 {
     /** @var  LoggerInterface */
     private $logger;

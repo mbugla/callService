@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace CS\ServiceApp\Sms\Application\Service;
 
 use CS\ServiceApp\Response\Domain\SipGateSms;
-use CS\ServiceApp\SMS\Domain\SmsCenter;
+use CS\ServiceApp\SMS\Domain\SmsGate;
 use CS\ServiceApp\SMS\Domain\SmsRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class SipGateSmsCenter implements SmsCenter, LoggerAwareInterface
+class SipGateSmsGate implements SmsGate, LoggerAwareInterface
 {
     /** @var  LoggerInterface */
     private $logger;

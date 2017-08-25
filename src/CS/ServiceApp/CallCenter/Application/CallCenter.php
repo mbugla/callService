@@ -10,7 +10,7 @@ use CS\ServiceApp\Call\Application\Api\Handler\DtmfCommandHandler;
 use CS\ServiceApp\Response\Application\ResponseFactory;
 use CS\ServiceApp\Response\Domain\Reject;
 use CS\ServiceApp\Response\Domain\SipGateResponse;
-use CS\ServiceApp\SMS\Domain\SmsCenter;
+use CS\ServiceApp\SMS\Domain\SmsGate;
 
 class CallCenter
 {
@@ -20,7 +20,7 @@ class CallCenter
     /** @var string */
     private $name;
 
-    /** @var SmsCenter */
+    /** @var SmsGate */
     private $smsCenter;
 
     /** @var CallCommandHandler */
@@ -39,14 +39,14 @@ class CallCenter
      * @param CallCommandHandler $callCommandHandler
      * @param DtmfCommandHandler $dtmfCommandHandler
      * @param ResponseFactory    $responseFactory
-     * @param SmsCenter          $smsCenter
+     * @param SmsGate            $smsCenter
      */
     public function __construct(
         string $name,
         CallCommandHandler $callCommandHandler,
         DtmfCommandHandler $dtmfCommandHandler,
         ResponseFactory $responseFactory,
-        SmsCenter $smsCenter
+        SmsGate $smsCenter
     ) {
         $this->name = $name;
         $this->smsCenter = $smsCenter;

@@ -7,10 +7,20 @@ use CS\ServiceApp\Call\Domain\Call;
 
 class Form
 {
+    /** @var  \DateTime | null */
+    private $answerDate;
+
+    /** @var int  */
     private $id;
 
     /** @var string */
     private $question;
+
+    /** @var  string */
+    private $firstName;
+
+    /** @var  string */
+    private $lastName;
 
     /** @var  \DateTime */
     private $createdAt;
@@ -27,13 +37,17 @@ class Form
      * @param Call   $call
      * @param string $question
      *
-     * @internal param $id
+     * @param string $firstName
+     * @param string $lastName
+     *
      */
-    public function __construct(Call $call, $question = '')
+    public function __construct(Call $call, $question = '', $firstName = '', $lastName = '')
     {
         $this->question = $question;
         $this->id = crc32($call->getCallId().time());
         $this->call = $call;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
     }
 
     /**
@@ -95,6 +109,46 @@ class Form
     public function setQuestion(string $question)
     {
         $this->question = $question;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param \DateTime $answerDate
+     */
+    public function receivedAnswer(\DateTime $answerDate)
+    {
+        $this->answerDate = $answerDate;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAnswered() : bool
+    {
+        return $this->answerDate instanceof \DateTime;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getAnswerDate()
+    {
+        return $this->answerDate;
     }
 
 }

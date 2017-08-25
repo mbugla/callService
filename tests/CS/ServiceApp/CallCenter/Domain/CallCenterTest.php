@@ -29,7 +29,7 @@ class CallCenterTest extends TestCase
         $formRepository = new InMemoryFormRepository();
         $smsRespository = new InMemorySmsRepository();
         $logger = new ConsoleLogger();
-        $smsCenter = new \Tests\CS\ServiceApp\Implementation\Sms\FakeSmsCenter();
+        $smsCenter = new \Tests\CS\ServiceApp\Implementation\Sms\FakeSmsGate();
         $smsCenter->setLogger($logger);
 
         $premiumContentDtmfHandler = new PremiumContentDtmfCommandHandler(
@@ -63,7 +63,7 @@ class CallCenterTest extends TestCase
         $formRepository = new InMemoryFormRepository();
         $smsRespository = new InMemorySmsRepository();
         $logger = new ConsoleLogger();
-        $smsCenter = new \Tests\CS\ServiceApp\Implementation\Sms\FakeSmsCenter();
+        $smsCenter = new \Tests\CS\ServiceApp\Implementation\Sms\FakeSmsGate();
         $smsCenter->setLogger($logger);
 
         $premiumContentDtmfHandler = new PremiumContentDtmfCommandHandler(
