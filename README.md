@@ -1,4 +1,8 @@
-service_app
+call service app
 ===========
 
-A Symfony project created on July 20, 2017, 3:52 pm.
+Project for handling SipGate https://www.sipgate.de/ API
+
+Ability to play given sound on incoming call, handle caller dtmf signal events and react
+
+Written using hexagonal architecture approach
