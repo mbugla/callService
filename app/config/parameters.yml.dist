@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+    app_url: https://call-service.codeplanet.pl
+    mobilant_sms_gateway: https://mobilant.sms.gateway.com
+    mobilant_key: ~
+    premium_content_url: https://call-service.codeplanet.pl/premium
